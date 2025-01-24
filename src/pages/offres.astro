@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Base from "../layouts/Base.astro";
 import Footer from "../components/Footer.astro";
+import Card from "../components/Card.astro";
 
 const offres = [
     {
@@ -45,20 +46,20 @@ const offres = [
         Offres
     </h1>
 
-    <div>
-{ offres.map((item) => 
-<li class="text-gray-50">{item.adresse}</li>
-<li class="text-gray-50">{item.favori}</li>
-<li class="text-gray-50">{item.id}</li>
-<li class="text-gray-50">{item.nbChambres}</li>
-<li class="text-gray-50">{item.nbSdb}</li>
-<li class="text-gray-50">{item.nomMaison}</li>
-<li class="text-gray-50">{item.prix}</li>
-<li class="text-gray-50">{item.surface}</li>
+    <div
+        class="text-gray-50 flex-col columns-3 p-5"
+        x-data="{ showFavorites: false }"
+    >
+        <button @click="showFavorites=!showFavorites">
+            <span x-show="!showFavorites">Afficher les favoris</span>
+            <span x-show="showFavorites">Afficher tout</span>
+        </button>
 
-    )
-}
-</div>
-
-
+        <div x-show="!showFavorites">
+            {offres.map((offre) => <Card {...offre} />)}
+        </div>
+        <div x-show="showFavorites">
+            {offres.map((offre) => offre.favori && <Card {...offre} />)}
+        </div>
+    </div>
 </Base>
