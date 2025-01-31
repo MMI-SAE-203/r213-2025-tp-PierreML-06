@@ -7,10 +7,10 @@ export async function getOffres() {
         let data = await db.collection('maison').getFullList({
             sort: '-created',
         });
-        //  data = ??.map((??) => {
-        //    ??= ?? (??, ??);
-        // return ??;
-        // });
+        data = data.map((maison) => {
+            maison.image_maison_url = db.files.getURL(maison, maison.image_maison);
+            return maison;
+        });
         return data;
     } catch (error) {
         console.log('Une erreur est survenue en lisant la liste des maisons', error);
