@@ -9,14 +9,9 @@ const offres = await getOffres();
 ---
 
 <Base titre="Accueil">
-    <h1 class="text-5xl block justify-self-center font-serif h-36">
-        Offres
-    </h1>
+    <h1 class="text-5xl block justify-self-center font-serif h-36">Offres</h1>
 
-    <div
-        class="flex-col columns-7 p-5"
-        x-data="{ showFavorites: false, open'open'}"
-    >
+    <div x-data="{ showFavorites: false, open:'open'}">
         <button @click="showFavorites=!showFavorites">
             <span x-show="!showFavorites">Afficher les favoris</span>
             <span x-show="showFavorites">Afficher tout</span>
@@ -25,10 +20,12 @@ const offres = await getOffres();
         <button x-on:click="open = ! open">Toggle Dropdown</button>
         <div :class="open ? '' : 'hidden'">Dropdown Contents...</div>
 
-        <div x-show="!showFavorites">
+        <div x-show="!showFavorites" class="grid grid-cols-3 p-5">
+            <!--  x-show="!showFavorites" -->
             {offres.map((offre) => <Card {...offre} />)}
         </div>
-        <div x-show="showFavorites">
+        <div x-show="showFavorites" class="grid grid-cols-3 p-5">
+            <!--  x-show="showFavorites" -->
             {offres.map((offre) => offre.favori && <Card {...offre} />)}
         </div>
     </div>
