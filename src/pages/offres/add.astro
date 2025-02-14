@@ -7,19 +7,54 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<h1 class="text-lg">Ajouter une offre</h1>
-<form action="/offres/add" method="POST" enctype="multipart/form-data">
+<h1 class="text-xl font-semibold mb-4">Ajouter une offre</h1>
+<a class="hover:text-lime-500" href="../">Offres</a>
+<form
+    action="/offres/add"
+    method="POST"
+    enctype="multipart/form-data"
+    class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg mx-auto space-y-4"
+>
     <input
         type="text"
         name="nomMaison"
         placeholder="Nom de la maison"
         required
-        class="w-full mt-2 p-2 border border-gray-300 rounded-md"
+        class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
     />
-    <input type="number" name="prix" placeholder="Prix" />
-    <input type="number" name="nbSdb" placeholder="Nombre de salles de bain" />
-    <input type="number" name="nbChambres" placeholder="Nombre de chambres" />
-    <input type="number" name="surface" placeholder="Superficie" />
-    <input type="file" name="image" />
-    <button type="submit">Ajouter</button>
+    <input
+        type="number"
+        name="prix"
+        placeholder="Prix"
+        class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+    />
+    <input
+        type="number"
+        name="nbSdb"
+        placeholder="Nombre de salles de bain"
+        class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+    />
+    <input
+        type="number"
+        name="nbChambres"
+        placeholder="Nombre de chambres"
+        class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+    />
+    <input
+        type="number"
+        name="surface"
+        placeholder="Superficie"
+        class="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+    />
+    <input
+        type="file"
+        name="image"
+        class="w-full p-2 border border-gray-300 rounded-md"
+    />
+    <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+    >
+        Ajouter
+    </button>
 </form>

@@ -4,12 +4,44 @@ import Base from "../../layouts/Base.astro";
 import Footer from "../../components/Footer.astro";
 import Card from "../../components/Card.astro";
 import { getOffres } from "../../backend.mjs";
+import { prerender } from "./[surface].astro";
+import { filterByPrix } from "../../backend.mjs";
 
 const offres = await getOffres();
+
+export const prerender = false;
+
+let message = "";
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const minPrix = parseInt(data.get("minPrix") as string);
+    const maxPrix = parseInt(data.get("maxPrix") as string);
+
+    if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
+        let Offres = await filterByPrix(minPrix, maxPrix);
+        if (Offres.length === 0) {
+            message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
+        } else {
+            message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`;
+        }
+    } else {
+        message = "Veuillez entrer des valeurs valides pour le prix.";
+    }
+} else {
+    let Offres = await getOffres();
+}
 ---
 
 <Base titre="Accueil">
+    <a class="hover:text-lime-500" href="/offres/add">Ajouter une maison</a>
+
     <h1 class="text-5xl block justify-self-center font-serif h-36">Offres</h1>
+
+    <form action="/offres" method="POST">
+        <input type="number" name="minPrix" placeholder="Prix minimum" />
+        <input type="number" name="maxPrix" placeholder="Prix maximum" />
+        <input type="submit" value="Filtrer par prix" />
+    </form>
 
     <div x-data="{ showFavorites: false, open:'open'}">
         <button @click="showFavorites=!showFavorites">
