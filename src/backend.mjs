@@ -68,3 +68,50 @@ export async function filterByPrix(prixMin, prixMax) {
         return [];
     }
 }
+
+export async function getAgents() {
+    try {
+        return await pb.collection("agent").getFullList({
+            sort: '-created'
+        });
+    } catch (error) {
+        console.log("Une erreur est survenue en récupérant les agents", error);
+        return [];
+    }
+}
+
+// Récupérer un agent spécifique par son ID
+export async function getAgent(id) {
+    try {
+        return await pb.collection("agent").getOne(id);
+    } catch (error) {
+        console.log("Une erreur est survenue en récupérant l'agent", error);
+        return null;
+    }
+}
+
+// Ajouter un nouvel agent
+export async function addAgent(formData) {
+    try {
+        const newAgent = await pb.collection("agent").create({
+            nom: formData.get("nom"),
+            prenom: formData.get("prenom"),
+            E_mail: formData.get("E_mail"),
+        });
+        return {
+            success: true,
+            message: "Agent ajouté avec succès !"
+        };
+    } catch (error) {
+        console.log("Erreur lors de l'ajout de l'agent", error);
+        return {
+            success: false,
+            message: "Une erreur est survenue lors de l'ajout de l'agent."
+        };
+    }
+}
+
+
+export async function setFavori(house) {
+    await pb.collection('maison').update(house.id, { favori: !house.favori });
+}

@@ -33,31 +33,62 @@ if (Astro.request.method === "POST") {
 ---
 
 <Base titre="Accueil">
-    <a class="hover:text-lime-500" href="/offres/add">Ajouter une maison</a>
+    <a
+        class="hover:text-lime-500 px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-200 ease-in-out hover:bg-blue-600"
+        href="/offres/add">Ajouter une maison</a
+    >
 
-    <h1 class="text-5xl block justify-self-center font-serif h-36">Offres</h1>
+    <h1 class="text-5xl text-center font-serif h-36 mt-4">Offres</h1>
 
-    <form action="/offres" method="POST">
-        <input type="number" name="minPrix" placeholder="Prix minimum" />
-        <input type="number" name="maxPrix" placeholder="Prix maximum" />
-        <input type="submit" value="Filtrer par prix" />
+    <form
+        action="/offres"
+        method="POST"
+        class="flex flex-col items-center space-y-4 mt-6"
+    >
+        <input
+            class="p-2 border rounded-lg w-64"
+            type="number"
+            name="minPrix"
+            placeholder="Prix minimum"
+        />
+        <input
+            class="p-2 border rounded-lg w-64"
+            type="number"
+            name="maxPrix"
+            placeholder="Prix maximum"
+        />
+        <input
+            class="px-4 py-2 bg-green-500 text-white rounded-lg cursor-pointer transition hover:bg-green-600"
+            type="submit"
+            value="Filtrer par prix"
+        />
     </form>
 
-    <div x-data="{ showFavorites: false, open:'open'}">
-        <button @click="showFavorites=!showFavorites">
+    <div x-data="{ showFavorites: false, open:'open'}" class="mt-6">
+        <button
+            @click="showFavorites=!showFavorites"
+            class="px-4 py-2 bg-gray-500 text-white rounded-lg transition hover:bg-gray-600"
+        >
             <span x-show="!showFavorites">Afficher les favoris</span>
             <span x-show="showFavorites">Afficher tout</span>
         </button>
 
-        <button x-on:click="open = ! open">Toggle Dropdown</button>
-        <div :class="open ? '' : 'hidden'">Dropdown Contents...</div>
+        <button
+            x-on:click="open = ! open"
+            class="ml-4 px-4 py-2 bg-purple-500 text-white rounded-lg transition hover:bg-purple-600"
+            >Toggle Dropdown</button
+        >
+        <div
+            :class="open ? '' : 'hidden'"
+            class="mt-2 p-4 bg-gray-100 rounded-lg shadow-md"
+        >
+            Dropdown Contents...
+        </div>
 
-        <div x-show="!showFavorites" class="grid grid-cols-3 p-5">
-            <!--  x-show="!showFavorites" -->
+        <div x-show="!showFavorites" class="grid grid-cols-3 gap-6 p-5">
             {offres.map((offre) => <Card {...offre} />)}
         </div>
-        <div x-show="showFavorites" class="grid grid-cols-3 p-5">
-            <!--  x-show="showFavorites" -->
+        <div x-show="showFavorites" class="grid grid-cols-3 gap-6 p-5">
             {offres.map((offre) => offre.favori && <Card {...offre} />)}
         </div>
     </div>

@@ -1,0 +1,26 @@
+---
+import { getAgent } from "../../backend.mjs";
+import Base from "../../layouts/Base.astro";
+
+const { id } = Astro.params;
+export const prerender = false;
+const agent = await getAgent(id);
+---
+
+<Base titre={agent ? `${agent.nom} ${agent.prenom}` : "Agent non trouvé"}>
+    {
+        agent ? (
+            <>
+                <h2>
+                    {agent.nom} {agent.prenom}
+                </h2>
+                <ul>
+                    <li>Email : {agent.E_mail}</li>
+                    <li>ID : {agent.id}</li>
+                </ul>
+            </>
+        ) : (
+            <p>Cet agent n'existe pas.</p>
+        )
+    }
+</Base>

@@ -1,0 +1,29 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getAgents } from "../../backend.mjs";
+import { prerender } from "../offres/[surface].astro";
+
+const agents = await getAgents();
+
+export const prerender = false;
+---
+
+<Base titre="Liste des agents">
+    <a class="hover:text-lime-500" href="/agent/add">Ajouter un agent</a>
+
+    <h1 class="text-5xl font-serif h-36">Agents</h1>
+
+    <h1>Liste des agents</h1>
+
+    <ul>
+        {
+            agents.map((agent) => (
+                <li>
+                    <a href={`/agent/${agent.id}`} class="hover:underline">
+                        {agent.nom} {agent.prenom} - {agent.E_mail}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</Base>
